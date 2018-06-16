@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <!-- <router-link to="/shuffle">Shuffle</router-link> | -->
+      <router-link to="/topvoted">Top Voted</router-link> |
       <router-link to="/upload">Inzenden</router-link>
     </div>
     <transition name="router-anim" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">

@@ -7,9 +7,9 @@
             </div>
         </div>
         <div class="quote-vote">
-            <i class="fas fa-angle-up fa-2x" @click="upvote(quote)" :class="{disabled: upvoted}"></i>
-            <span class="vote-label">{{ quote.votes }}</span>
-            <i class="fas fa-angle-down fa-2x" @click="downvote(quote)" :class="{disabled: downvoted}"></i>
+            <i class="fas fa-angle-up fa-2x" @click="upvote" :class="{disabled: upvoted}"></i>
+            <span class="vote-label">{{ votes }}</span>
+            <i class="fas fa-angle-down fa-2x" @click="downvote" :class="{disabled: downvoted}"></i>
             <span hidden readonly> {{ quote.id }}</span>
         </div>
     </div>
@@ -20,69 +20,55 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const geturl = "https://api.patrickattema.nl/v3/quotes/read";
     const voteurl = "https://api.patrickattema.nl/v3/quotes/vote";
     
     export default {
         name: 'quote',
-        props: ['quote'],
-        data () {
-            return {
-                quote: '',
-                upvoted: false,
-                downvoted: false,
-            }
-        },
-        mounted() {
-            this.getquotes();
+        props: {
+            quote: {
+                id: Number,
+                quote: String,
+                quoteBy: String,
+                sendInBy: String,
+                votes: Number,
+            },
+            upvoted: Boolean,
+            downvoted: Boolean,
         },
         methods: {
-            getquotes: function() {
-                axios.get(geturl)
-                .then(response => {
-                    this.quotes = response.data
-                    this.quotes.upvoted = 'false'
-                    this.quotes.downvoted = 'false'
-                    console.log(this.quotes)
-                })
-            },
-            upvote: function(quote) {
+            upvote: function() {
                 this.upvoted = !this.upvoted;
                 this.downvoted = false;
-                quote.votes ++;
-                var self = this
-                self.votes(quote)
-                console.log(quote.votes)
+                console.log(this.votes)
                 axios.post(voteurl, {
-                    id: quote.id,
-                    vote: quote.votes,
+                    id: this.quote.id,
+                    votes: this.quote.votes,
                 })
                 .then(function (response) {
-                    console.log(response.data);
-                })  
+                    console.log("Upvoted");
+                })
             },
-            downvote: function(quote) {
+            downvote: function() {
                 this.downvoted = !this.downvoted;
                 this.upvoted = false;
-                quote.votes --;
+                console.log(this.votes)
                 axios.post(voteurl, {
-                    id: quote.id,
-                    vote: quote.votes, 
+                    id: this.quote.id,
+                    votes: this.quote.votes, 
                 })
                 .then(function (response) {
-                    console.log(response.data);
-                })  
+                    console.log("Downvoted");
+                })
             }
         },
         computed: {
-            votes: function(quote) {
-                console.log(quote)
+            votes: function() {
                 if (this.upvoted) {
-                    return this.votes ++
+                    return this.quote.votes + 1;
                 } else if (this.downvoted) {
-                    return this.votes --;
+                    return this.quote.votes - 1;
                 } else {
-                    return this.votes;
+                    return this.quote.votes;
                 }
             }
         }
@@ -121,7 +107,7 @@
         .quote-text {
             text-rendering: geometricPrecision;
             color: #46608b;
-            font-size: 1.3em;
+            font-size: 1.2em;
             position: relative;
             width: 70%;
             height: 40%;
@@ -138,7 +124,7 @@
         }
     }
     .quote-vote {
-        height: 50%;
+        height: 30%;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);

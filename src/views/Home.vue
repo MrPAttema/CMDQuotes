@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div class="grid-container">
-            <Quote :quote="quote" v-if="usersPeople" v-for="quote in quotes" :key="quote.id" />
+            <Quote :quote="quote" v-for="quote in quotes" :key="quote.id" />
         </div>
     </div>
 </template>
@@ -9,6 +9,9 @@
 <script>
     import Vue from 'vue'
     import axios from 'axios'
+    import VueAxios from 'vue-axios'
+
+    const geturl = "https://api.patrickattema.nl/v3/quotes/read";
 
     import Quote from '@/components/Quote.vue'
     
@@ -16,39 +19,24 @@
         components: {
             Quote
         },
-         data () {
-            return {
-                quotes: [],
-            }
+        props: {
+            quotes: [],
         },
-        computed: {
-            quotes () {
-                if (this.$store.getters.getQuotes) {
-                    return this.$store.getters.getQuotes
-                } else {
-                    return []
-                }
-            }
+        mounted() {
+            this.getquotes();
         },
-        created () {
-            if (this.token) {
-            axios.all(this.getPeople())
-            .then(axios.spread((currentUser, people) => {
-                this.$store.dispatch('addPeople', {
-                    currentUser: currentUser.data,
-                    people: people.data
+        methods: {
+            getquotes: function() {
+                axios.get(geturl)
+                .then(response => {
+                    this.quotes = response.data
+                    console.log(this.quotes)
                 })
-            }))
-            .catch(err => {
-                console.log('err', err)
-                window.location = "https://www.carenzorgt.nl/login/oauth/authorize?response_type=token&client_id=" + variables.clientId + "&redirect_uri=" + variables.redirectUri + "&scope=user.read+calendar.read+care_givers.read"
-            })
-            }
+            },  
         }
     }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
     .main {
         width: 100%;

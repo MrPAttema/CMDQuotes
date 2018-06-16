@@ -1,16 +1,9 @@
 <template>
-  <div class="main">
-    <div class="grid-container">
-        <div class="quote-item" v-bind:key="quote" v-for="quote in quotes">
-            <div class="quote-text" >
-                "{{ quote.quote }}" - {{ quote.quoteBy }}
-                <div class="quote-sendby">
-                    Ingezonden door: {{ quote.sendInBy }}
-                </div>
-            </div>
+    <div class="main">
+        <div class="grid-container">
+            <Quote :quote="quote" v-for="quote in quotes" :key="quote.id" />
         </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -18,29 +11,55 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const url = "https://api.patrickattema.nl/?action=getquoteshuffle";
+    const geturl = "https://api.patrickattema.nl/v3/quotes/topvoted";
 
+    import Quote from '@/components/Quote.vue'
+    
     export default {
-        data () {
-            return {
-                quotes: []
-            }
+        components: {
+            Quote
+        },
+        props: {
+            quotes: [],
         },
         mounted() {
-            axios.get(url)
-            .then(response => {
-                this.quotes = response.data
-            })
+            this.getquotes();
+        },
+        methods: {
+            getquotes: function() {
+                axios.get(geturl)
+                .then(response => {
+                    this.quotes = response.data
+                    console.log(response.data);
+                })
+            },  
         }
     }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-        .main {
+    .main {
         width: 100%;
         top: 0;
         position: absolute;
+    }
+    span.vote-label {
+        background-color: #42567d;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 3px;
+        top: -5px;
+        position: relative;
+    }
+    .fa, .fas {
+        color: #46608b;
+        transition: opacity .25s ease-in-out;
+        -moz-transition: opacity .25s ease-in-out;
+        -webkit-transition: opacity .25s ease-in-out;
+    }
+    .disabled {
+        color: #b5c7e6;
     }
     .grid-container {
         // The content width you use on your website
@@ -83,6 +102,7 @@
             font-size: 1.3em;
             position: relative;
             width: 70%;
+            height: 40%;
             overflow: hidden;
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
@@ -95,9 +115,15 @@
             }
         }
     }
+    .quote-vote {
+        height: 50%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        position: relative;
+    }
     .quote-item:hover {
         background-image: linear-gradient( rgba(212, 212, 212, 0.5), rgba(197, 197, 197, 0.5) ), url(/img/tegel_2.0a679957.jpg);
-
     }
     @media (max-width: 414px){
         .grid-container{
