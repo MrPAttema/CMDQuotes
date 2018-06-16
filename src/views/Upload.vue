@@ -43,7 +43,7 @@
                 quote : '',
                 maxcharacter: 100,
                 remaincharactersText: '',
-                sitekey: '6Leus1oUAAAAAAci27RJ2_qv9G3LimHe-dgC0byw'
+                sitekey: ''
             }
         },
         methods: {
