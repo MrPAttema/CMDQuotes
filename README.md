@@ -9,17 +9,18 @@ $ npm run serve
 
 ### API Calls
 So with the application you have four API calls that you can make to https://api.patrickattema.nl.
+Please request your API token with me.
 
 | Call | Version | Method |
 | ------ | ------ | ------ |
 | /read | v3 | GET |
 | /create | v3 | POST |
 | /vote | v3 | POST |
-| topvoted | v3 | GET | 
+| /topvoted | v3 | GET | 
 
 API Syntax:
 ```sh
-https://api.patrickattema.nl/<Version>/quotes/<Call>
+https://api.patrickattema.nl/<Token>/<Version>/quotes/<Call>
 ```
 
 #### Future plans
