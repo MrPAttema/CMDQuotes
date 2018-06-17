@@ -20,7 +20,7 @@ Please request your API token with me.
 
 API Syntax:
 ```sh
-https://api.patrickattema.nl/<Token>/<Version>/quotes/<Call>
+https://api.patrickattema.nl/?token=<YourToken>/<Version>/quotes/<Call>
 ```
 
 #### Future plans
