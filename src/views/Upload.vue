@@ -30,7 +30,7 @@
     import VueAxios from 'vue-axios'
     import VueRecaptcha from 'vue-recaptcha'
 
-    const url = "https://api.patrickattema.nl/v3/quotes/create"
+    const url = "https://api.patrickattema.nl/v3/quotes/create?token=ysZsujctgocef2xkivTV"
 
     export default {
         components: { 

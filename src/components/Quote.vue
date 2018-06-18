@@ -8,7 +8,7 @@
         </div>
         <div class="quote-vote">
             <i class="fas fa-angle-up fa-2x" @click="upvote" :class="{disabled: upvoted}"></i>
-            <span class="vote-label">{{ votes }}</span>
+            <span class="vote-label" :value="votes">{{ votes }}</span>
             <i class="fas fa-angle-down fa-2x" @click="downvote" :class="{disabled: downvoted}"></i>
             <span hidden readonly> {{ quote.id }}</span>
         </div>
@@ -20,7 +20,7 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const voteurl = "https://api.patrickattema.nl/v3/quotes/vote";
+    const voteurl = "https://api.patrickattema.nl/v3/quotes/vote?token=";
     
     export default {
         name: 'quote',
@@ -30,19 +30,21 @@
                 quote: String,
                 quoteBy: String,
                 sendInBy: String,
-                votes: Number,
-            },
-            upvoted: Boolean,
-            downvoted: Boolean,
+            }
+        },
+        data() {
+            return {
+                upvoted: false,
+                downvoted: false,
+            }
         },
         methods: {
-            upvote: function() {
+            upvote: function(quote) {
                 this.upvoted = !this.upvoted;
                 this.downvoted = false;
-                console.log(this.votes)
                 axios.post(voteurl, {
                     id: this.quote.id,
-                    votes: this.quote.votes,
+                    votes: this.votes,
                 })
                 .then(function (response) {
                     console.log("Upvoted");
@@ -51,10 +53,9 @@
             downvote: function() {
                 this.downvoted = !this.downvoted;
                 this.upvoted = false;
-                console.log(this.votes)
                 axios.post(voteurl, {
                     id: this.quote.id,
-                    votes: this.quote.votes, 
+                    votes: this.votes, 
                 })
                 .then(function (response) {
                     console.log("Downvoted");
@@ -63,12 +64,13 @@
         },
         computed: {
             votes: function() {
+                var votes = this.quote.votes;
                 if (this.upvoted) {
-                    return this.quote.votes + 1;
+                    return (++ votes);
                 } else if (this.downvoted) {
-                    return this.quote.votes - 1;
+                    return (votes - 1);
                 } else {
-                    return this.quote.votes;
+                    return votes;
                 }
             }
         }
@@ -88,6 +90,7 @@
         border-radius: 3px;
         top: -5px;
         position: relative;
+        margin: 0 5px;
     }
     .fa, .fas {
         color: #46608b;

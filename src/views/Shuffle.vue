@@ -1,5 +1,8 @@
 <template>
     <div class="main">
+        <div class="banner">
+            <span>Nieuw: stemmen op je favorite quotes!</span>
+        </div>
         <div class="grid-container">
             <Quote :quote="quote" v-for="quote in quotes" :key="quote.id" />
         </div>
@@ -11,7 +14,7 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const geturl = "https://api.patrickattema.nl/v3/quotes/topvoted";
+    const geturl = "https://api.patrickattema.nl/v3/quotes/topvoted?token=";
 
     import Quote from '@/components/Quote.vue'
     
@@ -30,7 +33,6 @@
                 axios.get(geturl)
                 .then(response => {
                     this.quotes = response.data
-                    console.log(response.data);
                 })
             },  
         }
@@ -44,13 +46,19 @@
         top: 0;
         position: absolute;
     }
+    .banner {
+        height: 30px;
+        line-height: 30px;
+        background-color: #42567d;
+        color: white;
+    }
     span.vote-label {
         background-color: #42567d;
         color: white;
         padding: 5px 15px;
         border-radius: 3px;
         top: -5px;
-        position: relative;
+        margin: 0 5px;
     }
     .fa, .fas {
         color: #46608b;
