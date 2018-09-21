@@ -20,7 +20,7 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const voteurl = "https://api.patrickattema.nl/v3/quotes/vote";
+    const voteurl = "https://api.digitalden.nl/api/quote/vote";
     
     export default {
         name: 'quote',
