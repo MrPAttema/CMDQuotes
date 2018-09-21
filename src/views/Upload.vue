@@ -13,12 +13,16 @@
         <span>Kies je tegel:</span>
         <div class="tiles-container" id="get-tile">
             <div class="tile">
-                <img src="../assets/tegel_1.jpg" alt="">
-                <input type="radio" id="one" value="One" v-model="picked">
+                <label class="form-radio">
+                    <img for="one" class="tile-image" src="../assets/tegel_1.jpg" alt="">
+                    <input type="radio" id="one" value="1" v-model="picked">
+                </label>
             </div>
             <div class="tile">
-                <img src="../assets/tegel_2.jpg" alt="">
-                <input type="radio" id="two" value="Two" v-model="picked">
+                <label class="form-radio">
+                    <img for="two" class="tile-image" src="../assets/tegel_2.jpg" alt="">
+                    <input type="radio" id="two" value="2" v-model="picked">
+                </label>        
             </div>
         </div>
         <vue-recaptcha
@@ -56,7 +60,7 @@
                 quote : '',
                 maxcharacter: 100,
                 remaincharactersText: '',
-                sitekey: ''
+                sitekey: '',
             }
         },
         methods: {
@@ -67,7 +71,7 @@
                 console.log('Expired')
             },
             resetRecaptcha () {
-                this.$refs.recaptcha.reset() // Direct call reset method
+                this.$refs.recaptcha.reset();
             },
             charactersLeft() {
                 if (this.quote.length > this.maxcharacter) {
@@ -135,7 +139,6 @@
         z-index: 300;
     }
     .main {
-        padding: 5px;
         position: absolute;
         margin-bottom: 75px;
         width: 100%
@@ -148,6 +151,9 @@
         margin-top: 10px;
         max-width: 60%;
         margin: 0 auto;
+    }
+    .tile-image {
+        max-width: 95%;
     }
     .copyright {
         margin-top: 15px;

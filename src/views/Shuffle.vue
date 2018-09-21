@@ -30,7 +30,7 @@
                 axios.get(geturl)
                 .then(response => {
                     this.quotes = response.data
-                    console.log(response.data);
+                    // console.log(response.data);
                 })
             },  
         }

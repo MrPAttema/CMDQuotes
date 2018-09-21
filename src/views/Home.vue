@@ -19,8 +19,10 @@
         components: {
             Quote
         },
-        props: {
-            quotes: [],
+        data() {
+            return {
+                quotes: [],
+            }
         },
         mounted() {
             this.getquotes();
@@ -30,7 +32,7 @@
                 axios.get(geturl)
                 .then(response => {
                     this.quotes = response.data
-                    console.log(this.quotes)
+                    // console.log(this.quotes)
                 })
             },  
         }
@@ -87,7 +89,7 @@
         grid-column-gap: var(--gutter);
         grid-row-gap: var(--gutter);
         
-        padding-bottom: 50px;
+        padding-bottom: 10px;
     }
     .quote-item{
         font-family: 'Libre Baskerville', serif;

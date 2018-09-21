@@ -7,9 +7,10 @@
             </div>
         </div>
         <div class="quote-vote">
-            <i class="fas fa-angle-up fa-2x" @click="upvote" :class="{disabled: upvoted}"></i>
-            <span class="vote-label">{{ votes }}</span>
-            <i class="fas fa-angle-down fa-2x" @click="downvote" :class="{disabled: downvoted}"></i>
+            <i class="fas fa-angle-up fa-2x" @click="upvote" :class="{disabled: upvoted}" :disabled="voted === true"></i>
+            <span class="vote-label-voted" v-if="voted === true">{{ votes }}</span>
+            <span class="vote-label" v-else>{{ votes }}</span>
+            <i class="fas fa-angle-down fa-2x" @click="downvote" :class="{disabled: downvoted}" :disabled="voted === true"></i>
             <span hidden readonly> {{ quote.id }}</span>
         </div>
     </div>
@@ -19,11 +20,21 @@
     import Vue from 'vue'
     import axios from 'axios'
     import VueAxios from 'vue-axios'
+    import VueCookies from 'vue-cookies'
+
+    Vue.use(VueCookies)
 
     const voteurl = "https://api.digitalden.nl/api/quote/update/";
     
     export default {
         name: 'quote',
+        data() {
+            return {
+                upvoted: '',
+                downvoted: '',
+                voted: '',
+            }
+        },
         props: {
             quote: {
                 id: Number,
@@ -31,32 +42,54 @@
                 quoteBy: String,
                 sendInBy: String,
                 votes: Number,
-            },
-            upvoted: Boolean,
-            downvoted: Boolean,
+            }
+        },
+        created() {
+            this.checkVote();
         },
         methods: {
+            checkVote: function() {
+                if ((this.$cookies.get("quoteVote" + this.quote.id)) == 1) {
+                    this.voted = true;
+                    this.upvoted = !this.upvoted;
+                    this.downvoted = !this.downvoted;
+                }
+            },
             upvote: function() {
                 this.upvoted = !this.upvoted;
                 this.downvoted = false;
-                axios.post(voteurl + this.quote.id, {
-                    id: this.quote.id,
-                    votes: this.quote.votes,
-                })
-                .then(function (response) {
-                    console.log("Upvoted");
-                })
+                this.$cookies.set("quoteVote" + this.quote.id, 1);
+                if ((this.$cookies.get("quoteVote" + this.quote.id)) == 1) {
+                    this.voted = true;
+                } else {
+                    axios.post(voteurl + this.quote.id, {
+                        id: this.quote.id,
+                        votes: this.quote.votes,
+                    })
+                    .then(function (response) {
+                        this.voted = true;
+                        console.log("Upvoted");
+                    })
+                }
+
             },
             downvote: function() {
                 this.downvoted = !this.downvoted;
                 this.upvoted = false;
-                axios.post(voteurl + this.quote.id, {
-                    id: this.quote.id,
-                    votes: this.quote.votes, 
-                })
-                .then(function (response) {
-                    console.log("Downvoted");
-                })
+                this.$cookies.set("quoteVote" + this.quote.id, 1);
+                if ((this.$cookies.get("quoteVote" + this.quote.id)) == 1) {
+                    this.voted == true;
+                    console.log("Is al gestemt");
+                } else {
+                    axios.post(voteurl + this.quote.id, {
+                        id: this.quote.id,
+                        votes: this.quote.votes, 
+                    })
+                    .then(function (response) {
+                        this.voted == true;
+                        console.log("Downvoted");
+                    })
+                }
             }
         },
         computed: {
@@ -68,7 +101,7 @@
                 } else {
                     return this.quote.votes;
                 }
-            }
+            } 
         }
     }
 </script>
@@ -79,7 +112,15 @@
         top: 0;
         position: absolute;
     }
-    span.vote-label {
+    span.vote-label-voted {
+        background-color: #b5c7e6;
+        color: white;
+        padding: 5px 15px;
+        border-radius: 3px;
+        top: -5px;
+        position: relative;
+    }
+     span.vote-label {
         background-color: #42567d;
         color: white;
         padding: 5px 15px;
@@ -95,6 +136,7 @@
     }
     .disabled {
         color: #b5c7e6;
+
     }
     .quote-item{
         font-family: 'Libre Baskerville', serif;
