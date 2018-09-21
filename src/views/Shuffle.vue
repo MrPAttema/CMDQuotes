@@ -11,7 +11,7 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const geturl = "https://api.patrickattema.nl/v3/quotes/topvoted";
+    const geturl = "https://api.digitalden.nl/api/quote/read/topvoted";
 
     import Quote from '@/components/Quote.vue'
     

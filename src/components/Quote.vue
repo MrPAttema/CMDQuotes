@@ -1,9 +1,9 @@
 <template>
     <div class="quote-item" >
         <div class="quote-text">
-            "{{ quote.quote }}" - {{ quote.quoteBy }}
+            "{{ quote.quote }}" - {{ quote.quote_by }}
             <div class="quote-sendby">
-                Ingezonden door: {{ quote.sendInBy }}
+                Ingezonden door: {{ quote.send_in_by }}
             </div>
         </div>
         <div class="quote-vote">
@@ -20,7 +20,7 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const voteurl = "https://api.digitalden.nl/api/quote/vote";
+    const voteurl = "https://api.digitalden.nl/api/quote/update/";
     
     export default {
         name: 'quote',
@@ -39,8 +39,7 @@
             upvote: function() {
                 this.upvoted = !this.upvoted;
                 this.downvoted = false;
-                console.log(this.votes)
-                axios.post(voteurl, {
+                axios.post(voteurl + this.quote.id, {
                     id: this.quote.id,
                     votes: this.quote.votes,
                 })
@@ -51,8 +50,7 @@
             downvote: function() {
                 this.downvoted = !this.downvoted;
                 this.upvoted = false;
-                console.log(this.votes)
-                axios.post(voteurl, {
+                axios.post(voteurl + this.quote.id, {
                     id: this.quote.id,
                     votes: this.quote.votes, 
                 })

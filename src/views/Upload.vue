@@ -2,24 +2,36 @@
   <div class="main"> 
     <h1>Stuur hier je quote in!</h1>
     <form class="upload-quote" @submit.prevent="onSubmit">
-        Ingezonden door:<br>
-        <input type="text" v-model="name" name="name" autofocus>
+        <input type="text" v-model="name" name="name" autofocus placeholder="Ingezonden door:">
 
-        Wie citeer je?<br>
-        <input type="text" v-model="quotename" name="quotename">
+        <input type="text" v-model="quotename" name="quotename" placeholder="Wie zij het?">
 
         Quote (Max: 100 tekens):<br>
         <span><i>{{ remaincharactersText }}</i></span>
-        <textarea v-model="quote" v-on:keyup="charactersLeft()" rows="3" type="text" name="quote"></textarea>
-          <vue-recaptcha
+        <textarea v-model="quote" v-on:keyup="charactersLeft()" rows="3" type="text" name="quote" placeholder="Je quote"></textarea>
+
+        <span>Kies je tegel:</span>
+        <div class="tiles-container" id="get-tile">
+            <div class="tile">
+                <img src="../assets/tegel_1.jpg" alt="">
+                <input type="radio" id="one" value="One" v-model="picked">
+            </div>
+            <div class="tile">
+                <img src="../assets/tegel_2.jpg" alt="">
+                <input type="radio" id="two" value="Two" v-model="picked">
+            </div>
+        </div>
+        <vue-recaptcha
             ref="invisibleRecaptcha"
             @verify="onVerify"
             @expired="onExpired"
             size="invisible"
             :sitekey="sitekey">
-          </vue-recaptcha>
-          <button type="submit">I'm still gonna send it!</button>
-        <div class="copyright">&#169; 2018 - Patrick Attema</div>
+        </vue-recaptcha>
+        <button type="submit">Stuur dit in!</button>
+        <div class="copyright">&#169; 2018 - Patrick Attema
+            <img src="../assets/PoweredByDD.png" alt="">
+        </div>
     </form>
   </div>
 </template>
@@ -38,6 +50,7 @@
         },
         data () {
             return {
+                picked: '',
                 name: '',
                 quotename: '',
                 quote : '',
@@ -86,18 +99,55 @@
     }
 </script>
 
-<style>
+<style lang="scss" scoped>
+
+.tiles-container {
+        // The content width you use on your website
+        --content-width: 25%;
+        
+        // The size of the gutter  
+        --gutter: 0px;
+        
+        // The amount of columns
+        --columns: 4;  
+        
+        // This is the calculation for the row height.   
+        --row-size: calc(
+            ( var(--content-width) - (var(--gutter) * (var(--columns) - 1))
+            ) / var(--columns)
+        );
+        
+        display: grid;
+
+        width: 100%;
+        
+        grid-template-columns: repeat(var(--columns), 1fr);
+        grid-auto-rows: var(--row-size);
+
+        grid-column-gap: var(--gutter);
+        grid-row-gap: var(--gutter);
+        
+        padding-bottom: 50px;
+    }
+
     .grecaptcha-badge {
         bottom: 55px !important;
         z-index: 300;
     }
     .main {
-        width: 100%;
+        padding: 5px;
         position: absolute;
+        margin-bottom: 75px;
+        width: 100%
     }
     .upload-quote{
-        max-width: 300px;
+        max-width: 400px;
         margin: auto;
+    }
+    img {
+        margin-top: 10px;
+        max-width: 60%;
+        margin: 0 auto;
     }
     .copyright {
         margin-top: 15px;
