@@ -49,6 +49,7 @@
         background-color: #42567d;
         color: white;
         padding: 5px 15px;
+        margin: 0 10px;
         border-radius: 3px;
         top: -5px;
         position: relative;

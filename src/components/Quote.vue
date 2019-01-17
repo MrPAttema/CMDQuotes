@@ -46,6 +46,7 @@
         },
         created() {
             this.checkVote();
+            this.$cookies.config('12h');
         },
         methods: {
             checkVote: function() {
@@ -68,7 +69,7 @@
                     })
                     .then(function (response) {
                         this.voted = true;
-                        console.log("Upvoted");
+                        // console.log("Upvoted");
                     })
                 }
 
@@ -79,7 +80,7 @@
                 this.$cookies.set("quoteVote" + this.quote.id, 1);
                 if ((this.$cookies.get("quoteVote" + this.quote.id)) == 1) {
                     this.voted == true;
-                    console.log("Is al gestemt");
+                    // console.log("Is al gestemt");
                 } else {
                     axios.post(voteurl + this.quote.id, {
                         id: this.quote.id,
@@ -87,7 +88,7 @@
                     })
                     .then(function (response) {
                         this.voted == true;
-                        console.log("Downvoted");
+                        // console.log("Downvoted");
                     })
                 }
             }
@@ -116,6 +117,7 @@
         background-color: #b5c7e6;
         color: white;
         padding: 5px 15px;
+        margin: 0 10px;
         border-radius: 3px;
         top: -5px;
         position: relative;
@@ -124,6 +126,7 @@
         background-color: #42567d;
         color: white;
         padding: 5px 15px;
+        margin: 0 10px;
         border-radius: 3px;
         top: -5px;
         position: relative;
@@ -133,9 +136,12 @@
         transition: opacity .25s ease-in-out;
         -moz-transition: opacity .25s ease-in-out;
         -webkit-transition: opacity .25s ease-in-out;
+        pointer-events: visible;
+        cursor: pointer;
     }
     .disabled {
         color: #b5c7e6;
+        pointer-events: none;
 
     }
     .quote-item{

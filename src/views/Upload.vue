@@ -2,15 +2,15 @@
   <div class="main"> 
     <h1>Stuur hier je quote in!</h1>
     <form class="upload-quote" @submit.prevent="onSubmit">
-        <input type="text" v-model="name" name="name" autofocus placeholder="Ingezonden door:">
+        <input type="text" v-model="name" name="name" autofocus placeholder="Jouw naam">
 
-        <input type="text" v-model="quotename" name="quotename" placeholder="Wie zij het?">
+        <input type="text" v-model="quotename" name="quotename" placeholder="Wie citeer je">
 
         Quote (Max: 100 tekens):<br>
         <span><i>{{ remaincharactersText }}</i></span>
         <textarea v-model="quote" v-on:keyup="charactersLeft()" rows="3" type="text" name="quote" placeholder="Je quote"></textarea>
 
-        <span>Kies je tegel:</span>
+        <!-- <span>Kies je tegel:</span>
         <div class="tiles-container" id="get-tile">
             <div class="tile">
                 <label class="form-radio">
@@ -24,14 +24,14 @@
                     <input type="radio" id="two" value="2" v-model="picked">
                 </label>        
             </div>
-        </div>
-        <vue-recaptcha
+        </div> -->
+        <!-- <vue-recaptcha
             ref="invisibleRecaptcha"
             @verify="onVerify"
             @expired="onExpired"
             size="invisible"
             :sitekey="sitekey">
-        </vue-recaptcha>
+        </vue-recaptcha> -->
         <button type="submit">Stuur dit in!</button>
         <div class="copyright">&#169; 2018 - Patrick Attema
             <img src="../assets/PoweredByDD.png" alt="">
@@ -46,12 +46,12 @@
     import VueAxios from 'vue-axios'
     import VueRecaptcha from 'vue-recaptcha'
 
-    const url = "https://api.patrickattema.nl/v3/quotes/create"
+    const url = "https://api.digitalden.nl/api/quote/create"
 
     export default {
-        components: { 
-             'vue-recaptcha': VueRecaptcha
-        },
+        // components: { 
+        //      'vue-recaptcha': VueRecaptcha
+        // },
         data () {
             return {
                 picked: '',
@@ -70,9 +70,9 @@
             onExpired: function () {
                 console.log('Expired')
             },
-            resetRecaptcha () {
-                this.$refs.recaptcha.reset();
-            },
+            // resetRecaptcha () {
+            //     this.$refs.recaptcha.reset();
+            // },
             charactersLeft() {
                 if (this.quote.length > this.maxcharacter) {
                     this.remaincharactersText = "Limiet met "+this.maxcharacter+" overschreden.";
@@ -82,7 +82,7 @@
                 }
             },
             onSubmit: function (){
-                this.$refs.invisibleRecaptcha.execute()
+                // this.$refs.invisibleRecaptcha.execute()
                 var self = this
                 axios.post(url, {
                     name: self.name,
@@ -170,6 +170,7 @@
         border-width: thin;
         border-color: #a0a6ff;
         background-color: #b5b7e2;
+        cursor: pointer;
     } 
     input {
         padding: 10px 20px;
@@ -197,6 +198,7 @@
         border-radius: 3px;
         border-style: solid;
         border-width: thin;
+        font-family: 'Open Sans', sans-serif;
     }
 </style>
 
