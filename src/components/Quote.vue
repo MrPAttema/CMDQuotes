@@ -25,6 +25,7 @@
     Vue.use(VueCookies)
 
     const voteurl = "https://api.digitalden.nl/api/quote/update/";
+
     
     export default {
         name: 'quote',
@@ -94,7 +95,7 @@
                 } else if (this.downvoted == true) {
                     return this.quote.votes -1;
                 } else {
-                    return this.quote.votes;
+                    return votes;
                 }
             } 
         }
@@ -124,6 +125,7 @@
         border-radius: 3px;
         top: -5px;
         position: relative;
+        margin: 0 5px;
     }
     .fa, .fas {
         color: #46608b;

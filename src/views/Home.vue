@@ -1,5 +1,8 @@
 <template>
     <div class="main">
+        <div class="banner">
+            <span>Nieuw: stemmen op je favorite quotes!</span>
+        </div>
         <div class="grid-container">
             <Quote :quote="quote" v-for="quote in quotes" :key="quote.id" />
         </div>
@@ -12,6 +15,7 @@
     import VueAxios from 'vue-axios'
 
     const geturl = "https://api.digitalden.nl/api/quote/read";
+
 
     import Quote from '@/components/Quote.vue'
     
@@ -44,6 +48,12 @@
         width: 100%;
         top: 0;
         position: absolute;
+    }
+    .banner {
+        height: 30px;
+        line-height: 30px;
+        background-color: #42567d;
+        color: white;
     }
     span.vote-label {
         background-color: #42567d;
