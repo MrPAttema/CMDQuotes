@@ -95,7 +95,7 @@
                 } else if (this.downvoted == true) {
                     return this.quote.votes -1;
                 } else {
-                    return votes;
+                    return this.quote.votes;
                 }
             } 
         }
