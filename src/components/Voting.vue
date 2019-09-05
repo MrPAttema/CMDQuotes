@@ -12,7 +12,7 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const voteurl = "https://api.patrickattema.nl/?action=vote";
+    const voteurl = "https://api.digitalden.nl/api/quote/update";
     
     export default {
         template: "#quote-vote",
@@ -28,14 +28,14 @@
                 this.upvoted = !this.upvoted;
                 this.downvoted = false;
                 quote.votes ++;
-                // console.log(quote.votes)
-                // axios.post(voteurl, {
-                //     id: quote.id,
-                //     vote: quote.votes,
-                // })
-                // .then(function (response) {
-                //     console.log(response.data);
-                // })  
+                console.log(quote.votes)
+                axios.post(voteurl, {
+                    id: quote.id,
+                    vote: quote.votes,
+                })
+                .then(function (response) {
+                    console.log(response.data);
+                })  
             },
             downvote: function(quote) {
                 this.downvoted = !this.downvoted;
@@ -44,13 +44,13 @@
                 var votes = quote.votes
                 console.log(votes)
                 quote.votes --;
-                // axios.post(voteurl, {
-                //     id: quote.id,
-                //     vote: quote.votes, 
-                // })
-                // .then(function (response) {
-                //     console.log(response.data);
-                // })  
+                axios.post(voteurl, {
+                    id: quote.id,
+                    vote: quote.votes, 
+                })
+                .then(function (response) {
+                    console.log(response.data);
+                })  
             }
         },
         computed: {

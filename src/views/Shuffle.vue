@@ -14,7 +14,7 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const geturl = "https://api.patrickattema.nl/v3/quotes/topvoted?token=";
+    const geturl = "https://api.digitalden.nl/api/quote/read/topvoted";
 
     import Quote from '@/components/Quote.vue'
     
@@ -33,6 +33,7 @@
                 axios.get(geturl)
                 .then(response => {
                     this.quotes = response.data
+                    // console.log(response.data);
                 })
             },  
         }

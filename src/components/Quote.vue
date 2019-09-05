@@ -1,15 +1,16 @@
 <template>
     <div class="quote-item" >
         <div class="quote-text">
-            "{{ quote.quote }}" - {{ quote.quoteBy }}
+            "{{ quote.quote }}" - {{ quote.quote_by }}
             <div class="quote-sendby">
-                Ingezonden door: {{ quote.sendInBy }}
+                Ingezonden door: {{ quote.send_in_by }}
             </div>
         </div>
         <div class="quote-vote">
-            <i class="fas fa-angle-up fa-2x" @click="upvote" :class="{disabled: upvoted}"></i>
-            <span class="vote-label" :value="votes">{{ votes }}</span>
-            <i class="fas fa-angle-down fa-2x" @click="downvote" :class="{disabled: downvoted}"></i>
+            <i class="fas fa-angle-up fa-2x" @click="upvote" :class="{disabled: upvoted}" :disabled="voted === true"></i>
+            <span class="vote-label-voted" v-if="voted === true">{{ votes }}</span>
+            <span class="vote-label" v-else>{{ votes }}</span>
+            <i class="fas fa-angle-down fa-2x" @click="downvote" :class="{disabled: downvoted}" :disabled="voted === true"></i>
             <span hidden readonly> {{ quote.id }}</span>
         </div>
     </div>
@@ -19,60 +20,84 @@
     import Vue from 'vue'
     import axios from 'axios'
     import VueAxios from 'vue-axios'
+    import VueCookies from 'vue-cookies'
 
-    const voteurl = "https://api.patrickattema.nl/v3/quotes/vote?token=";
+    Vue.use(VueCookies)
+
+    const voteurl = "https://api.digitalden.nl/api/quote/update/";
+
     
     export default {
         name: 'quote',
+        data() {
+            return {
+                upvoted: false,
+                downvoted: false,
+                voted: false,
+            }
+        },
         props: {
             quote: {
                 id: Number,
                 quote: String,
                 quoteBy: String,
                 sendInBy: String,
+                votes: Number,
             }
         },
-        data() {
-            return {
-                upvoted: false,
-                downvoted: false,
-            }
+        created() {
+            this.checkVote();
+            this.$cookies.config('12h');
         },
         methods: {
-            upvote: function(quote) {
-                this.upvoted = !this.upvoted;
-                this.downvoted = false;
-                axios.post(voteurl, {
-                    id: this.quote.id,
-                    votes: this.votes,
-                })
-                .then(function (response) {
-                    console.log("Upvoted");
-                })
+            checkVote: function() {
+                if ((this.$cookies.get("quoteVote" + this.quote.id)) == 1) {
+                    this.voted = true;
+                    this.upvoted = true;
+                    this.downvoted = true;
+                    return true;
+                }
+                return false;
+            },
+            upvote: function() {
+                var self = this;
+                self.upvoted = !self.upvoted;
+                self.downvoted = false;
+                if (!self.checkVote() == true) {
+                    var voteVar = self.quote.votes +1;
+                    axios.post(voteurl + self.quote.id, {
+                        id: self.quote.id,
+                        votes: voteVar,
+                    })
+                    self.$cookies.set("quoteVote" + self.quote.id, 1);
+                    self.voted = true;
+                }
             },
             downvote: function() {
-                this.downvoted = !this.downvoted;
-                this.upvoted = false;
-                axios.post(voteurl, {
-                    id: this.quote.id,
-                    votes: this.votes, 
-                })
-                .then(function (response) {
-                    console.log("Downvoted");
-                })
+                var self = this;
+                self.downvoted = !self.downvoted;
+                self.upvoted = false;   
+                if (!self.checkVote() == true) {
+                    var voteVar = self.quote.votes -1;
+                    axios.post(voteurl + self.quote.id, {
+                        id: self.quote.id,
+                        votes: voteVar, 
+                    })
+                    self.$cookies.set("quoteVote" + self.quote.id, 1,);
+                    self.voted = true;
+                }
             }
         },
         computed: {
             votes: function() {
-                var votes = this.quote.votes;
-                if (this.upvoted) {
-                    return (++ votes);
-                } else if (this.downvoted) {
-                    return (votes - 1);
+                if (this.upvoted == true) {
+                    return this.quote.votes +1;
+                } else if (this.downvoted == true) {
+                    return this.quote.votes -1;
                 } else {
                     return votes;
                 }
-            }
+            } 
         }
     }
 </script>
@@ -83,10 +108,20 @@
         top: 0;
         position: absolute;
     }
-    span.vote-label {
+    span.vote-label-voted {
+        background-color: #b5c7e6;
+        color: white;
+        padding: 5px 15px;
+        margin: 0 10px;
+        border-radius: 3px;
+        top: -5px;
+        position: relative;
+    }
+     span.vote-label {
         background-color: #42567d;
         color: white;
         padding: 5px 15px;
+        margin: 0 10px;
         border-radius: 3px;
         top: -5px;
         position: relative;
@@ -97,9 +132,13 @@
         transition: opacity .25s ease-in-out;
         -moz-transition: opacity .25s ease-in-out;
         -webkit-transition: opacity .25s ease-in-out;
+        pointer-events: visible;
+        cursor: pointer;
     }
     .disabled {
         color: #b5c7e6;
+        pointer-events: none;
+
     }
     .quote-item{
         font-family: 'Libre Baskerville', serif;

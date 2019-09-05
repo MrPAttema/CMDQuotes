@@ -14,7 +14,8 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const geturl = "https://api.patrickattema.nl/v3/quotes/read?token=";
+    const geturl = "https://api.digitalden.nl/api/quote/read";
+
 
     import Quote from '@/components/Quote.vue'
     
@@ -22,8 +23,10 @@
         components: {
             Quote
         },
-        props: {
-            quotes: [],
+        data() {
+            return {
+                quotes: [],
+            }
         },
         mounted() {
             this.getquotes();
@@ -33,6 +36,7 @@
                 axios.get(geturl)
                 .then(response => {
                     this.quotes = response.data
+                    // console.log(this.quotes)
                 })
             },  
         }
@@ -55,6 +59,7 @@
         background-color: #42567d;
         color: white;
         padding: 5px 15px;
+        margin: 0 10px;
         border-radius: 3px;
         top: -5px;
         position: relative;
@@ -95,7 +100,7 @@
         grid-column-gap: var(--gutter);
         grid-row-gap: var(--gutter);
         
-        padding-bottom: 50px;
+        padding-bottom: 10px;
     }
     .quote-item{
         font-family: 'Libre Baskerville', serif;
@@ -128,9 +133,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
         position: relative;
-    }
-    .quote-item:hover {
-        background-image: linear-gradient( rgba(212, 212, 212, 0.5), rgba(197, 197, 197, 0.5) ), url(/img/tegel_2.0a679957.jpg);
     }
     @media (max-width: 414px){
         .grid-container{
