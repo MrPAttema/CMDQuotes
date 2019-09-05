@@ -1,14 +1,19 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/topvoted">Top Voted</router-link> |
-      <router-link to="/upload">Inzenden</router-link>
+<div>
+    <div class="announcement">
+        <a href="http://www.strawpoll.me/17957053" target="_blank">Stem nu op een nieuwe feature</a>
     </div>
-    <transition name="router-anim" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-        <router-view/>
-    </transition>
-  </div>
+    <div id="app">
+        <div id="nav">
+            <router-link to="/">Home</router-link> |
+            <router-link to="/topvoted">Top Voted</router-link> |
+            <router-link to="/upload">Inzenden</router-link>
+        </div>
+        <transition name="router-anim" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+            <router-view/>
+        </transition>
+    </div>
+</div>
 </template>
 
 <style lang="scss">
@@ -17,6 +22,24 @@
     html, body {
         margin: 0;
     }
+    .announcement{
+       position: fixed;
+       height: 35px; 
+       width: 100%;
+       z-index: 999;
+       background-color: #fff;
+       font-family: 'Open Sans', sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-align: center;
+        color: #2c3e50;
+       a {
+            line-height: 35px;
+            width: 100%;
+            text-align: -webkit-center;
+            margin: 0 auto;
+        }
+    }
     #app {
         font-family: 'Open Sans', sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -24,6 +47,7 @@
         text-align: center;
         color: #2c3e50;
         height: 100vh;
+        padding-top: 35px;
     }
     #nav {
         line-height: 50px;

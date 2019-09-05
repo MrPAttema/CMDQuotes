@@ -33,7 +33,7 @@
             :sitekey="sitekey">
         </vue-recaptcha> -->
         <button type="submit">Stuur dit in!</button>
-        <div class="copyright">&#169; 2018 - Patrick Attema
+        <div class="copyright">&#169; 2019 - Patrick Attema
             <img src="../assets/PoweredByDD.png" alt="">
         </div>
     </form>

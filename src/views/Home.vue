@@ -124,9 +124,6 @@
         transform: translate(-50%, -50%);
         position: relative;
     }
-    // .quote-item:hover {
-    //     background-image: linear-gradient( rgba(212, 212, 212, 0.5), rgba(197, 197, 197, 0.5) ), url(/img/tegel_2.0a679957.jpg);
-    // }
     @media (max-width: 414px){
         .grid-container{
             --columns: 1;
