@@ -25,14 +25,15 @@
     Vue.use(VueCookies)
 
     const voteurl = "https://api.digitalden.nl/api/quote/update/";
+
     
     export default {
         name: 'quote',
         data() {
             return {
-                upvoted: '',
-                downvoted: '',
-                voted: '',
+                upvoted: false,
+                downvoted: false,
+                voted: false,
             }
         },
         props: {
@@ -52,53 +53,47 @@
             checkVote: function() {
                 if ((this.$cookies.get("quoteVote" + this.quote.id)) == 1) {
                     this.voted = true;
-                    this.upvoted = !this.upvoted;
-                    this.downvoted = !this.downvoted;
+                    this.upvoted = true;
+                    this.downvoted = true;
+                    return true;
                 }
+                return false;
             },
             upvote: function() {
-                this.upvoted = !this.upvoted;
-                this.downvoted = false;
-                this.$cookies.set("quoteVote" + this.quote.id, 1);
-                if ((this.$cookies.get("quoteVote" + this.quote.id)) == 1) {
-                    this.voted = true;
-                } else {
-                    axios.post(voteurl + this.quote.id, {
-                        id: this.quote.id,
-                        votes: this.quote.votes,
+                var self = this;
+                self.upvoted = !self.upvoted;
+                self.downvoted = false;
+                if (!self.checkVote() == true) {
+                    var voteVar = self.quote.votes +1;
+                    axios.post(voteurl + self.quote.id, {
+                        id: self.quote.id,
+                        votes: voteVar,
                     })
-                    .then(function (response) {
-                        this.voted = true;
-                        // console.log("Upvoted");
-                    })
+                    self.$cookies.set("quoteVote" + self.quote.id, 1);
+                    self.voted = true;
                 }
-
             },
             downvote: function() {
-                this.downvoted = !this.downvoted;
-                this.upvoted = false;
-                this.$cookies.set("quoteVote" + this.quote.id, 1);
-                if ((this.$cookies.get("quoteVote" + this.quote.id)) == 1) {
-                    this.voted == true;
-                    // console.log("Is al gestemt");
-                } else {
-                    axios.post(voteurl + this.quote.id, {
-                        id: this.quote.id,
-                        votes: this.quote.votes, 
+                var self = this;
+                self.downvoted = !self.downvoted;
+                self.upvoted = false;   
+                if (!self.checkVote() == true) {
+                    var voteVar = self.quote.votes -1;
+                    axios.post(voteurl + self.quote.id, {
+                        id: self.quote.id,
+                        votes: voteVar, 
                     })
-                    .then(function (response) {
-                        this.voted == true;
-                        // console.log("Downvoted");
-                    })
+                    self.$cookies.set("quoteVote" + self.quote.id, 1,);
+                    self.voted = true;
                 }
             }
         },
         computed: {
             votes: function() {
-                if (this.upvoted) {
-                    return this.quote.votes + 1;
-                } else if (this.downvoted) {
-                    return this.quote.votes - 1;
+                if (this.upvoted == true) {
+                    return this.quote.votes +1;
+                } else if (this.downvoted == true) {
+                    return this.quote.votes -1;
                 } else {
                     return this.quote.votes;
                 }
@@ -130,6 +125,7 @@
         border-radius: 3px;
         top: -5px;
         position: relative;
+        margin: 0 5px;
     }
     .fa, .fas {
         color: #46608b;

@@ -14,6 +14,7 @@
 
     const geturl = "https://api.test/api/quote/read";
 
+
     import Quote from '@/components/Quote.vue'
     var infiniteScroll =  require('vue-infinite-scroll');
     Vue.use(infiniteScroll)
@@ -91,6 +92,12 @@
         width: 100%;
         top: 0;
         position: absolute;
+    }
+    .banner {
+        height: 30px;
+        line-height: 30px;
+        background-color: #42567d;
+        color: white;
     }
     span.vote-label {
         background-color: #42567d;
@@ -170,9 +177,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
         position: relative;
-    }
-    .quote-item:hover {
-        background-image: linear-gradient( rgba(212, 212, 212, 0.5), rgba(197, 197, 197, 0.5) ), url(/img/tegel_2.0a679957.jpg);
     }
     @media (max-width: 414px){
         .grid-container{
