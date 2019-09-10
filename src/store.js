@@ -6,6 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         quotes: {},
+        loaded: false,
     },
     mutations: {
 
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     getters: {
         getQuotes: state => {
             return state.quotes
+        },
+        loaded: state => {
+            return state.loaded
         },
     }
 })

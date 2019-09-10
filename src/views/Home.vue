@@ -1,7 +1,8 @@
 <template>
     <div class="main">
-        <div class="grid-container">
+        <div class="grid-container"v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
             <Quote :quote="quote" v-for="quote in quotes" :key="quote.id" />
+            <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
         </div>
     </div>
 </template>
@@ -11,30 +12,76 @@
     import axios from 'axios'
     import VueAxios from 'vue-axios'
 
-    const geturl = "https://api.digitalden.nl/api/quote/read";
+    const geturl = "https://api.test/api/quote/read";
 
     import Quote from '@/components/Quote.vue'
+    var infiniteScroll =  require('vue-infinite-scroll');
+    Vue.use(infiniteScroll)
     
     export default {
         components: {
-            Quote
+            Quote,
         },
         data() {
             return {
+                busy: false,
+                page: 1,
                 quotes: [],
             }
         },
         mounted() {
-            this.getquotes();
+            // const listElm = document.querySelector('#infinite-list');
+            // console.log(listElm.scrollTop + listElm.clientHeight)
+            // console.log(listElm.scrollHeight)
+            // listElm.addEventListener('scroll', function(){
+            //     if(listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight) {
+            //         this.loadMore();
+            //     }
+            // });
+            this.loadMore();
         },
         methods: {
-            getquotes: function() {
-                axios.get(geturl)
-                .then(response => {
-                    this.quotes = response.data
-                    // console.log(this.quotes)
+            // getQuotes: function() {
+            //     axios.get(geturl)
+            //     .then(response => {
+            //         this.quotes = response.data.data
+            //         this.nexturl = response.data.next_page_url
+            //         console.log(response)
+            //     })
+            // },
+            loadMore () {
+                this.busy = true;
+                axios.get(geturl, {
+                    params: {
+                        page: this.page,
+                    },
                 })
-            },  
+                .then(({ data }) => {
+                    if (data.data.length) {
+                        this.page += 1;
+                        this.quotes.push(...data.data);
+                        this.busy = true;
+                    } else {
+                        this.busy = false;
+                    }
+                });
+            },
+            // loadMore() {
+            //     axios.get(geturl, {
+            //         params: {
+            //             page: this.page,
+            //         },
+            //     })
+            //     .then(({ data }) => {
+            //         if (data.data.length) {
+            //             this.page += 1;
+            //             this.quotes.push(...data.data);
+            //             $state.loaded();
+            //         } else {
+            //             $state.complete();
+            //         }
+            //     });
+            // },
         }
     }
 </script>
