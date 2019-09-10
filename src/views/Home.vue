@@ -1,10 +1,7 @@
 <template>
     <div class="main">
-        <div class="banner">
-            <span>Nieuw: stemmen op je favorite quotes!</span>
-        </div>
-        <div class="grid-container">
-            <Quote :quote="quote" v-for="quote in quotes" :key="quote.id" />
+        <div class="grid-container" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
+            <Quote :quote="quote" v-for="quote in quotes" :key="quote.id"/>
         </div>
     </div>
 </template>
@@ -13,32 +10,36 @@
     import Vue from 'vue'
     import axios from 'axios'
     import VueAxios from 'vue-axios'
-
-    const geturl = "https://api.digitalden.nl/api/quote/read";
-
-
     import Quote from '@/components/Quote.vue'
+
+    const geturl = "https://api.test/api/quote/read";
     
     export default {
         components: {
-            Quote
+            Quote,
         },
         data() {
             return {
+                busy: false,
                 quotes: [],
+                results: [],
+                limit: 100,
             }
         },
-        mounted() {
-            this.getquotes();
-        },
         methods: {
-            getquotes: function() {
-                axios.get(geturl)
-                .then(response => {
-                    this.quotes = response.data
-                    // console.log(this.quotes)
+            loadMore() {
+                this.busy = true;   
+                axios.get(geturl).then(res => {
+                    const append = res.data.slice(this.quotes.length, this.quotes.length + this.limit)
+                    this.quotes = this.quotes.concat(append);
+                    this.busy = false;
+                }).catch( (err) => {
+                    this.busy = false;
                 })
-            },  
+            }
+        },
+        created() {
+            this.loadMore();
         }
     }
 </script>
