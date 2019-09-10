@@ -1,8 +1,7 @@
 <template>
     <div class="main">
-        <div class="grid-container"v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="10">
-            <Quote :quote="quote" v-for="quote in quotes" :key="quote.id" />
-            <!-- <infinite-loading @infinite="infiniteHandler"></infinite-loading> -->
+        <div class="grid-container" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
+            <Quote :quote="quote" v-for="quote in quotes" :key="quote.id"/>
         </div>
     </div>
 </template>
@@ -11,13 +10,9 @@
     import Vue from 'vue'
     import axios from 'axios'
     import VueAxios from 'vue-axios'
+    import Quote from '@/components/Quote.vue'
 
     const geturl = "https://api.test/api/quote/read";
-
-
-    import Quote from '@/components/Quote.vue'
-    var infiniteScroll =  require('vue-infinite-scroll');
-    Vue.use(infiniteScroll)
     
     export default {
         components: {
@@ -26,63 +21,25 @@
         data() {
             return {
                 busy: false,
-                page: 1,
                 quotes: [],
+                results: [],
+                limit: 100,
             }
         },
-        mounted() {
-            // const listElm = document.querySelector('#infinite-list');
-            // console.log(listElm.scrollTop + listElm.clientHeight)
-            // console.log(listElm.scrollHeight)
-            // listElm.addEventListener('scroll', function(){
-            //     if(listElm.scrollTop + listElm.clientHeight >= listElm.scrollHeight) {
-            //         this.loadMore();
-            //     }
-            // });
-            this.loadMore();
-        },
         methods: {
-            // getQuotes: function() {
-            //     axios.get(geturl)
-            //     .then(response => {
-            //         this.quotes = response.data.data
-            //         this.nexturl = response.data.next_page_url
-            //         console.log(response)
-            //     })
-            // },
-            loadMore () {
-                this.busy = true;
-                axios.get(geturl, {
-                    params: {
-                        page: this.page,
-                    },
+            loadMore() {
+                this.busy = true;   
+                axios.get(geturl).then(res => {
+                    const append = res.data.slice(this.quotes.length, this.quotes.length + this.limit)
+                    this.quotes = this.quotes.concat(append);
+                    this.busy = false;
+                }).catch( (err) => {
+                    this.busy = false;
                 })
-                .then(({ data }) => {
-                    if (data.data.length) {
-                        this.page += 1;
-                        this.quotes.push(...data.data);
-                        this.busy = true;
-                    } else {
-                        this.busy = false;
-                    }
-                });
-            },
-            // loadMore() {
-            //     axios.get(geturl, {
-            //         params: {
-            //             page: this.page,
-            //         },
-            //     })
-            //     .then(({ data }) => {
-            //         if (data.data.length) {
-            //             this.page += 1;
-            //             this.quotes.push(...data.data);
-            //             $state.loaded();
-            //         } else {
-            //             $state.complete();
-            //         }
-            //     });
-            // },
+            }
+        },
+        created() {
+            this.loadMore();
         }
     }
 </script>

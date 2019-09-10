@@ -1,17 +1,14 @@
 <template>
 <div>
-    <div class="announcement">
-        <a href="http://www.strawpoll.me/17957053" target="_blank">Stem nu op een nieuwe feature</a>
-    </div>
     <div id="app">
         <div id="nav">
             <router-link to="/">Home</router-link> |
             <router-link to="/topvoted">Top Voted</router-link> |
             <router-link to="/upload">Inzenden</router-link>
         </div>
-        <transition name="router-anim" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
-            <router-view/>
-        </transition>
+        <router-view/>
+        <!-- <transition name="router-anim" enter-active-class="animated fadeIn" leave-active-class="animated fadeOut">
+        </transition> -->
     </div>
 </div>
 </template>

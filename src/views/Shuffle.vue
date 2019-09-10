@@ -1,10 +1,7 @@
 <template>
     <div class="main">
-        <div class="banner">
-            <span>Nieuw: stemmen op je favorite quotes!</span>
-        </div>
-        <div class="grid-container">
-            <Quote :quote="quote" v-for="quote in quotes" :key="quote.id" />
+        <div class="grid-container" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
+            <Quote :quote="quote" v-for="quote in quotes" :key="quote.id"/>
         </div>
     </div>
 </template>
@@ -13,34 +10,42 @@
     import Vue from 'vue'
     import axios from 'axios'
     import VueAxios from 'vue-axios'
+    import Quote from '@/components/Quote.vue'
 
     const geturl = "https://api.test/api/quote/read/topvoted";
-
-    import Quote from '@/components/Quote.vue'
     
     export default {
         components: {
-            Quote
+            Quote,
         },
-        props: {
-            quotes: [],
-        },
-        mounted() {
-            this.getquotes();
+        data() {
+            return {
+                busy: false,
+                quotes: [],
+                results: [],
+                limit: 100,
+            }
         },
         methods: {
-            getquotes: function() {
-                axios.get(geturl)
-                .then(response => {
-                    this.quotes = response.data.data
-                    // console.log(response.data);
+            loadMore() {
+                this.busy = true;   
+                console.log("Scroll");
+                axios.get(geturl).then(res => {
+                    const append = res.data.slice(this.quotes.length,this.quotes.length + this.limit )         
+                    this.quotes = this.quotes.concat(append);
+                    this.busy = false;
+                }).catch( (err) => {
+                    this.busy = false;
                 })
-            },  
+            
+                }
+        },
+        created() {
+            this.loadMore();
         }
     }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
     .main {
         width: 100%;
@@ -57,9 +62,10 @@
         background-color: #42567d;
         color: white;
         padding: 5px 15px;
+        margin: 0 10px;
         border-radius: 3px;
         top: -5px;
-        margin: 0 5px;
+        position: relative;
     }
     .fa, .fas {
         color: #46608b;
@@ -97,7 +103,7 @@
         grid-column-gap: var(--gutter);
         grid-row-gap: var(--gutter);
         
-        padding-bottom: 50px;
+        padding-bottom: 10px;
     }
     .quote-item{
         font-family: 'Libre Baskerville', serif;
@@ -130,9 +136,6 @@
         left: 50%;
         transform: translate(-50%, -50%);
         position: relative;
-    }
-    .quote-item:hover {
-        background-image: linear-gradient( rgba(212, 212, 212, 0.5), rgba(197, 197, 197, 0.5) ), url(/img/tegel_2.0a679957.jpg);
     }
     @media (max-width: 414px){
         .grid-container{
