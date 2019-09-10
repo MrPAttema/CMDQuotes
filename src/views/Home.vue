@@ -12,7 +12,7 @@
     import VueAxios from 'vue-axios'
     import Quote from '@/components/Quote.vue'
 
-    const geturl = "https://api.test/api/quote/read";
+    const geturl = "https://api.digitalden.nl/api/quote/read";
     
     export default {
         components: {
@@ -29,8 +29,9 @@
         methods: {
             loadMore() {
                 this.busy = true;   
+                console.log("Scroll");
                 axios.get(geturl).then(res => {
-                    const append = res.data.slice(this.quotes.length, this.quotes.length + this.limit)
+                    const append = res.data.slice(this.quotes.length,this.quotes.length + this.limit)
                     this.quotes = this.quotes.concat(append);
                     this.busy = false;
                 }).catch( (err) => {

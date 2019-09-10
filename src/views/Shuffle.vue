@@ -12,7 +12,7 @@
     import VueAxios from 'vue-axios'
     import Quote from '@/components/Quote.vue'
 
-    const geturl = "https://api.test/api/quote/read/topvoted";
+    const geturl = "https://api.digitalden.nl/api/quote/read/topvoted";
     
     export default {
         components: {
@@ -36,9 +36,8 @@
                     this.busy = false;
                 }).catch( (err) => {
                     this.busy = false;
-                })
-            
-                }
+                })       
+            }
         },
         created() {
             this.loadMore();
