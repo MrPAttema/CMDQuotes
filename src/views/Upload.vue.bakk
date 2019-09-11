@@ -1,0 +1,59 @@
+<template>
+    <div id="root">
+      <div>
+        <vue-recaptcha
+          ref="recaptcha"
+          @verify="onVerify"
+          @expired="onExpired"
+          :sitekey="sitekey">
+        </vue-recaptcha>
+        <button @click="resetRecaptcha"> Reset ReCAPTCHA </button>
+      </div>
+      <div>
+        <h3> Invisible ReCAPTCHA </h3>
+        <form @submit.prevent="onSubmit">
+          <vue-recaptcha
+            ref="invisibleRecaptcha"
+            @verify="onVerify"
+            @expired="onExpired"
+            size="invisible"
+            :sitekey="sitekey">
+          </vue-recaptcha>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+</template>
+<script>
+    import Vue from 'vue'
+    import axios from 'axios'
+    import VueAxios from 'vue-axios'
+    import VueRecaptcha from 'vue-recaptcha';
+
+    const url = "https://api.test/api/quote/create"
+export default {
+    
+    data() {
+        return {
+            sitekey: '6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI'
+        }
+    },
+    components: {
+        'vue-recaptcha': VueRecaptcha
+    },
+    methods: {
+        onSubmit: function () {
+        this.$refs.invisibleRecaptcha.execute()
+        },
+        onVerify: function (response) {
+        console.log('Verify: ' + response)
+        },
+        onExpired: function () {
+        console.log('Expired')
+        },
+        resetRecaptcha () {
+        this.$refs.recaptcha.reset() // Direct call reset method
+        }
+    }
+}
+</script>
