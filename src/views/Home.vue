@@ -1,6 +1,6 @@
 <template>
     <div class="main">
-        <div class="grid-container" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
+        <div class="grid-container" v-infinite-scroll="loadMore" infinite-scroll-distance="-10" infinite-scroll-disabled="busy" infinite-scroll-throttle-delay="25">
             <Quote :quote="quote" v-for="quote in quotes" :key="quote.id"/>
         </div>
     </div>
@@ -21,6 +21,7 @@
         data() {
             return {
                 busy: false,
+                atEnd: false,
                 quotes: [],
                 results: [],
                 limit: 100,
@@ -28,15 +29,19 @@
         },
         methods: {
             loadMore() {
-                this.busy = true;   
-                console.log("Scroll");
-                axios.get(geturl).then(res => {
-                    const append = res.data.slice(this.quotes.length,this.quotes.length + this.limit)
-                    this.quotes = this.quotes.concat(append);
-                    this.busy = false;
-                }).catch( (err) => {
-                    this.busy = false;
-                })
+                if (!this.atEnd) {
+                    this.busy = true;   
+                    axios.get(geturl).then(res => {
+                        const append = res.data.slice(this.quotes.length,this.quotes.length + this.limit)
+                        this.quotes = this.quotes.concat(append);
+                        this.busy = false;
+                        if (this.quotes.length == res.data.length) {
+                            this.atEnd = true;
+                        }
+                    }).catch( (err) => {
+                        this.busy = false;
+                    })
+                }
             }
         },
         created() {
