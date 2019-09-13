@@ -38,17 +38,6 @@
                 <img src="../assets/PoweredByDD.png" alt="">
             </div>      
         </form>
-
-        <div class="upload-quote">
-            <!-- <vue-recaptcha
-                ref="recaptcha"
-                @verify="onVerify"
-                @expired="onExpired"
-                :sitekey="siteKey">
-            </vue-recaptcha>
-            <button @click="resetRecaptcha">Reset ReCAPTCHA</button> -->
-        </div>
-
     </div>
 </template>
 
@@ -77,30 +66,8 @@
         },
         methods: {
             onVerify: function (response) {
-                var self = this
-                self.$refs.invisibleRecaptcha.execute()
-                axios.post(url, {
-                    name: self.name,
-                    quotename: self.quotename,
-                    quote: self.quote,
-                    recaptcha: response
-                })
-                .then(function (res) {
-                    alert(JSON.stringify(res.data));
-                })
-                .catch(function (error) {
-                    console.log(error);
-                }); 
-            },
-            onExpired: function () {
-                console.log('Expired')
-            },
-            resetRecaptcha () {
-                this.$refs.recaptcha.reset();
-            },
-            onSubmit: function (response){
-                var self = this
-                self.$refs.invisibleRecaptcha.execute()
+                var self = this;
+                console.log(response);
                 axios.post(url, {
                     name: self.name,
                     quotename: self.quotename,
@@ -112,7 +79,16 @@
                 })
                 .catch(function (error) {
                     console.log(error);
-                });       
+                });
+            },
+            onExpired: function () {
+                console.log('Expired')
+            },
+            resetRecaptcha () {
+                this.$refs.recaptcha.reset();
+            },
+            onSubmit: function (){
+                this.$refs.invisibleRecaptcha.execute()       
             },
             charactersLeft() {
                 if (this.quote.length > this.maxcharacter) {
@@ -158,8 +134,8 @@
     }
 
     .grecaptcha-badge {
-        bottom: 55px !important;
-        z-index: 300;
+        bottom: 70px !important;
+        z-index: 999 !important;
     }
     .main {
         position: absolute;
@@ -223,6 +199,7 @@
         border-width: thin;
         font-family: 'Open Sans', sans-serif;
     }
+
 </style>
 
 
