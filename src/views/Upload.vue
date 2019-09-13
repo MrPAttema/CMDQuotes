@@ -47,7 +47,7 @@
     import VueAxios from 'vue-axios'
     import VueRecaptcha from 'vue-recaptcha';
 
-    const url = "https://api.test/api/quote/create"
+    const url = "https://api.digitalden.nl/api/quote/create"
 
     export default {
         components: {
