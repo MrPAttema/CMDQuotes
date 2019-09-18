@@ -23,7 +23,7 @@
                     </label>        
                 </div>
             </div> -->
-
+            
             <vue-recaptcha
                 ref="invisibleRecaptcha"
                 @verify="onVerify"
@@ -47,7 +47,7 @@
     import VueAxios from 'vue-axios'
     import VueRecaptcha from 'vue-recaptcha';
 
-    const url = "https://api.digitalden.nl/api/quote/create"
+    const url = "http://api.test/api/quote/create"
 
     export default {
         components: {
@@ -68,6 +68,7 @@
             onVerify: function (response) {
                 var self = this;
                 console.log(response);
+                axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
                 axios.post(url, {
                     name: self.name,
                     quotename: self.quotename,
@@ -88,7 +89,7 @@
                 this.$refs.recaptcha.reset();
             },
             onSubmit: function (){
-                this.$refs.invisibleRecaptcha.execute()       
+                this.$refs.invisibleRecaptcha.execute()  
             },
             charactersLeft() {
                 if (this.quote.length > this.maxcharacter) {
@@ -103,6 +104,11 @@
 </script>
 
 <style lang="scss" scoped>
+
+[grecaptcha-badge] {
+    position: fixed;
+    bottom: 40px;
+}
 
 .tiles-container {
         // The content width you use on your website
@@ -133,10 +139,6 @@
         padding-bottom: 50px;
     }
 
-    .grecaptcha-badge {
-        bottom: 70px !important;
-        z-index: 999 !important;
-    }
     .main {
         position: absolute;
         margin-bottom: 75px;
