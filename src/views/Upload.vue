@@ -23,7 +23,7 @@
                     </label>        
                 </div>
             </div> -->
-            
+
             <vue-recaptcha
                 ref="invisibleRecaptcha"
                 @verify="onVerify"
@@ -47,7 +47,7 @@
     import VueAxios from 'vue-axios'
     import VueRecaptcha from 'vue-recaptcha';
 
-    const url = "http://api.test/api/quote/create"
+    const url = "http://api.digitalden.nl/api/quote/create"
 
     export default {
         components: {
