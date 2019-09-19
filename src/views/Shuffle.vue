@@ -101,7 +101,7 @@
     }
     .quote-item{
         font-family: 'Libre Baskerville', serif;
-        background-image: url('../assets/tegel_2.jpg');
+        // background-image: url('../assets/tegel_2.jpg');
         background-size: cover;
         background-position: center center;
         background-color: whitesmoke;

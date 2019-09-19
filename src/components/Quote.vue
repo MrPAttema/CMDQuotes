@@ -1,5 +1,5 @@
 <template>
-    <div class="quote-item" :style="{ backgroundImage: `url('../img/tegel_${quote.tile}.jpg')` }">
+    <div class="quote-item">
         <div class="quote-text">
             "{{ quote.quote }}" - {{ quote.quote_by }}
             <div class="quote-sendby">
@@ -142,6 +142,7 @@
     }
     .quote-item{
         font-family: 'Libre Baskerville', serif;
+        background-image: url('../assets/tegel_2.jpg');
         background-size: cover;
         background-position: center center;
         background-color: whitesmoke;
