@@ -8,7 +8,7 @@
             <span><i>{{ remaincharactersText }}</i></span>
             <textarea v-model="quote" v-on:keyup="charactersLeft()" rows="3" type="text" name="quote" placeholder="Je quote"></textarea>
 
-            <!-- <span>Kies je tegel:</span>
+            <span>Kies je tegel:</span>
             <div class="tiles-container" id="get-tile">
                 <div class="tile">
                     <label class="form-radio">
@@ -22,7 +22,19 @@
                         <input type="radio" id="two" value="2" v-model="picked">
                     </label>        
                 </div>
-            </div> -->
+                <div class="tile">
+                    <label class="form-radio">
+                        <img for="three" class="tile-image" src="../assets/tegel_3.jpg" alt="">
+                        <input type="radio" id="three" value="3" v-model="picked">
+                    </label>        
+                </div>
+                <div class="tile">
+                    <label class="form-radio">
+                        <img for="four" class="tile-image" src="../assets/tegel_4.jpg" alt="">
+                        <input type="radio" id="four" value="4" v-model="picked">
+                    </label>        
+                </div>
+            </div>
 
             <vue-recaptcha
                 ref="invisibleRecaptcha"
@@ -47,7 +59,7 @@
     import VueAxios from 'vue-axios'
     import VueRecaptcha from 'vue-recaptcha';
 
-    const url = "https://api.digitalden.nl/api/quote/create"
+    const url = "https://api.test/api/quote/create"
 
     export default {
         components: {
