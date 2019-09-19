@@ -1,6 +1,9 @@
 <template>
 <div>
     <div id="app">
+        <div class="announcement">
+            Nu met 's werelds mooiste tegeltjes. Of nee, toch niet.
+        </div>
         <div id="nav">
             <router-link to="/">Home</router-link> |
             <router-link to="/topvoted">Top Voted</router-link> |
@@ -21,15 +24,16 @@
     }
     .announcement{
        position: fixed;
+       line-height: 35px;
        height: 35px; 
        width: 100%;
        z-index: 999;
-       background-color: #fff;
+       background-color: #2c3e50;
        font-family: 'Open Sans', sans-serif;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
-        color: #2c3e50;
+        color: #fff;
        a {
             line-height: 35px;
             width: 100%;
@@ -49,7 +53,7 @@
         line-height: 50px;
         margin: 0 auto;
         position: fixed;
-        top: 0;
+        top: 35px;
         height: 50px;
         width: 100vw;
         -webkit-box-shadow: 0px 0px 7px 3px #e4e4e4;
@@ -67,7 +71,7 @@
     } 
     .main {
         width: 100%;
-        top: 50px;
+        top: 85px;
         position: absolute;
     }
 </style>

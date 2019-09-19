@@ -13,25 +13,25 @@
                 <div class="tile">
                     <label class="form-radio">
                         <img for="one" class="tile-image" src="../assets/tegel_1.jpg" alt="">
-                        <input type="radio" id="one" value="1" v-model="picked">
+                        <input type="radio" id="one" value="1" v-model="tile">
                     </label>
                 </div>
                 <div class="tile">
                     <label class="form-radio">
                         <img for="two" class="tile-image" src="../assets/tegel_2.jpg" alt="">
-                        <input type="radio" id="two" value="2" v-model="picked">
+                        <input type="radio" id="two" value="2" v-model="tile">
                     </label>        
                 </div>
                 <div class="tile">
                     <label class="form-radio">
                         <img for="three" class="tile-image" src="../assets/tegel_3.jpg" alt="">
-                        <input type="radio" id="three" value="3" v-model="picked">
+                        <input type="radio" id="three" value="3" v-model="tile">
                     </label>        
                 </div>
                 <div class="tile">
                     <label class="form-radio">
                         <img for="four" class="tile-image" src="../assets/tegel_4.jpg" alt="">
-                        <input type="radio" id="four" value="4" v-model="picked">
+                        <input type="radio" id="four" value="4" v-model="tile">
                     </label>        
                 </div>
             </div>
@@ -70,7 +70,8 @@
                 picked: '',
                 name: '',
                 quotename: '',
-                quote : '',
+                quote: '',
+                tile: 2,
                 maxcharacter: 100,
                 remaincharactersText: '',
                 siteKey: '6Lc-7bcUAAAAAMZLJBjFl8rQFmnTubr7lDFHgfkt',
@@ -85,6 +86,7 @@
                     name: self.name,
                     quotename: self.quotename,
                     quote: self.quote,
+                    tile: self.tile,
                     recaptcha: response
                 })
                 .then(function (response) {
