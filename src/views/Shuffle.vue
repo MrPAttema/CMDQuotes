@@ -46,11 +46,6 @@
 </script>
 
 <style lang="scss" scoped>
-    .main {
-        width: 100%;
-        top: 0;
-        position: absolute;
-    }
     .banner {
         height: 30px;
         line-height: 30px;

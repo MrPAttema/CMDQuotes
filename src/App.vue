@@ -44,14 +44,15 @@
         text-align: center;
         color: #2c3e50;
         height: 100vh;
-        padding-top: 35px;
     }
     #nav {
         line-height: 50px;
+        margin: 0 auto;
         position: fixed;
-        bottom: 0;
+        top: 0;
         height: 50px;
-        width: 100%;
+        width: 100vw;
+        -webkit-box-shadow: 0px 0px 7px 3px #e4e4e4;
         box-shadow: 0px 0px 7px 3px #e4e4e4;
         z-index: 100;
         background-color: white;
@@ -64,4 +65,9 @@
     #nav a.router-link-exact-active {
         color: #5a9eb3;
     } 
+    .main {
+        width: 100%;
+        top: 50px;
+        position: absolute;
+    }
 </style>
