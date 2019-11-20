@@ -13,7 +13,7 @@
     import Quote from '@/components/Quote.vue'
 
     const geturl = "https://api.digitalden.nl/api/quote/read";
-    
+
     export default {
         components: {
             Quote,
@@ -90,18 +90,18 @@
             ( var(--content-width) - (var(--gutter) * (var(--columns) - 1))
             ) / var(--columns)
         );
-        
+
         display: grid;
 
         width: 100%;
         max-width: var(--content-width);
-        
+
         grid-template-columns: repeat(var(--columns), 1fr);
         grid-auto-rows: var(--row-size);
 
         grid-column-gap: var(--gutter);
         grid-row-gap: var(--gutter);
-        
+
         padding-bottom: 10px;
     }
     .quote-item{

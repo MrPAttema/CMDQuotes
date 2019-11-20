@@ -20,19 +20,19 @@
                     <label class="form-radio">
                         <img for="two" class="tile-image" src="../assets/tegel_2.jpg" alt="">
                         <input type="radio" id="two" value="2" v-model="tile">
-                    </label>        
+                    </label>
                 </div>
                 <div class="tile">
                     <label class="form-radio">
                         <img for="three" class="tile-image" src="../assets/tegel_3.jpg" alt="">
                         <input type="radio" id="three" value="3" v-model="tile">
-                    </label>        
+                    </label>
                 </div>
                 <div class="tile">
                     <label class="form-radio">
                         <img for="four" class="tile-image" src="../assets/tegel_4.jpg" alt="">
                         <input type="radio" id="four" value="4" v-model="tile">
-                    </label>        
+                    </label>
                 </div>
             </div>
 
@@ -48,7 +48,7 @@
 
             <div class="copyright">&#169; 2019 - Patrick Attema
                 <img src="../assets/PoweredByDD.png" alt="">
-            </div>      
+            </div>
         </form>
     </div>
 </template>
@@ -59,7 +59,7 @@
     import VueAxios from 'vue-axios'
     import VueRecaptcha from 'vue-recaptcha';
 
-    const url = "https://api.test/api/quote/create"
+    const url = "https://api.digitalden.nl/api/quote/create"
 
     export default {
         components: {
