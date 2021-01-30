@@ -1,5 +1,5 @@
 <template>
-    <div class="main"> 
+    <div class="main">
         <h1>Stuur hier je quote in!</h1>
         <form class="upload-quote" @submit.prevent="onSubmit">
             <input type="text" v-model="name" name="name" autofocus placeholder="Jouw naam">
@@ -46,7 +46,7 @@
 
             <button action="submit">Stuur dit in!</button>
 
-            <div class="copyright">&#169; 2019 - Patrick Attema
+            <div class="copyright">&#169; 2019 - {{ new Date().getFullYear() }} - Patrick Attema
                 <img src="../assets/PoweredByDD.png" alt="">
             </div>
         </form>
@@ -103,7 +103,7 @@
                 this.$refs.recaptcha.reset();
             },
             onSubmit: function (){
-                this.$refs.invisibleRecaptcha.execute()  
+                this.$refs.invisibleRecaptcha.execute()
             },
             charactersLeft() {
                 if (this.quote.length > this.maxcharacter) {
@@ -127,29 +127,29 @@
 .tiles-container {
         // The content width you use on your website
         --content-width: 25%;
-        
-        // The size of the gutter  
+
+        // The size of the gutter
         --gutter: 0px;
-        
+
         // The amount of columns
-        --columns: 4;  
-        
-        // This is the calculation for the row height.   
+        --columns: 4;
+
+        // This is the calculation for the row height.
         --row-size: calc(
             ( var(--content-width) - (var(--gutter) * (var(--columns) - 1))
             ) / var(--columns)
         );
-        
+
         display: grid;
 
         width: 100%;
-        
+
         grid-template-columns: repeat(var(--columns), 1fr);
         grid-auto-rows: var(--row-size);
 
         grid-column-gap: var(--gutter);
         grid-row-gap: var(--gutter);
-        
+
         padding-bottom: 50px;
     }
 
@@ -186,14 +186,14 @@
         border-color: #a0a6ff;
         background-color: #b5b7e2;
         cursor: pointer;
-    } 
+    }
     input {
         padding: 10px 20px;
         border-style: none;
         width: 100%;
         border-radius: 3px;
         font-family: 'Open Sans', sans-serif;
-    }  
+    }
     input[type="text"] {
         width: 100%;
         padding: 12px 20px;

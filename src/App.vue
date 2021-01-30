@@ -2,7 +2,7 @@
 <div>
     <div id="app">
         <div class="announcement">
-            Nu met 's werelds mooiste tegeltjes. Of nee, toch niet.
+            Veel is kut, maar niet alles. Stay home, keep safe.
         </div>
         <div id="nav">
             <router-link to="/">Home</router-link> |
@@ -25,7 +25,7 @@
     .announcement{
        position: fixed;
        line-height: 35px;
-       height: 35px; 
+       height: 35px;
        width: 100%;
        z-index: 999;
        background-color: #2c3e50;
@@ -68,7 +68,7 @@
     }
     #nav a.router-link-exact-active {
         color: #5a9eb3;
-    } 
+    }
     .main {
         width: 100%;
         top: 85px;

@@ -1,5 +1,5 @@
 <template>
-    <div class="quote-item">
+    <div class="quote-item" v-bind:style="{ 'background-image': image}">
         <div class="quote-text">
             "{{ quote.quote }}" - {{ quote.quote_by }}
             <div class="quote-sendby">
@@ -25,7 +25,7 @@
     Vue.use(VueCookies)
 
     const voteurl = "https://api.digitalden.nl/api/quote/update/";
-    
+
     export default {
         name: 'quote',
         data() {
@@ -33,6 +33,7 @@
                 upvoted: false,
                 downvoted: false,
                 voted: false,
+                image: `url(${require('@/assets/tegel_' + this.quote.tile + '.jpg')})`,
             }
         },
         props: {
@@ -43,6 +44,7 @@
                 sendInBy: String,
                 tile: Number,
                 votes: Number,
+                tile: Number,
             }
         },
         created() {
@@ -76,12 +78,12 @@
             downvote: function() {
                 var self = this;
                 self.downvoted = !self.downvoted;
-                self.upvoted = false;   
+                self.upvoted = false;
                 if (!self.checkVote() == true) {
                     var voteVar = self.quote.votes -1;
                     axios.post(voteurl + self.quote.id, {
                         id: self.quote.id,
-                        votes: voteVar, 
+                        votes: voteVar,
                     })
                     self.$cookies.set("quoteVote" + self.quote.id, 1,);
                     self.voted = true;
@@ -97,7 +99,7 @@
                 } else {
                     return this.quote.votes;
                 }
-            } 
+            }
         }
     }
 </script>
@@ -142,7 +144,7 @@
     }
     .quote-item{
         font-family: 'Libre Baskerville', serif;
-        background-image: url('../assets/tegel_2.jpg');
+        // background-image: url('../assets/tegel_2.jpg');
         background-size: cover;
         background-position: center center;
         background-color: whitesmoke;

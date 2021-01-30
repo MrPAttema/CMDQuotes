@@ -30,7 +30,7 @@
         methods: {
             loadMore() {
                 if (!this.atEnd) {
-                    this.busy = true;   
+                    this.busy = true;
                     axios.get(geturl).then(res => {
                         const append = res.data.slice(this.quotes.length,this.quotes.length + this.limit)
                         this.quotes = this.quotes.concat(append);
@@ -78,14 +78,14 @@
     .grid-container {
         // The content width you use on your website
         --content-width: 100vw;
-        
-        // The size of the gutter  
+
+        // The size of the gutter
         --gutter: 0px;
-        
+
         // The amount of columns
-        --columns: 1;  
-        
-        // This is the calculation for the row height.   
+        --columns: 1;
+
+        // This is the calculation for the row height.
         --row-size: calc(
             ( var(--content-width) - (var(--gutter) * (var(--columns) - 1))
             ) / var(--columns)
