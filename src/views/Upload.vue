@@ -71,7 +71,7 @@
                 name: '',
                 quotename: '',
                 quote: '',
-                tile: 2,
+                tile: 1,
                 maxcharacter: 100,
                 remaincharactersText: '',
                 siteKey: '6Lc-7bcUAAAAAMZLJBjFl8rQFmnTubr7lDFHgfkt',
